@@ -1,6 +1,6 @@
 {
   "name": "@terse/webpack",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "The best of the React ecosystem in a simple, cohesive API.",
   "main": "dist/index.js",
   "files": [
