@@ -1,0 +1,269 @@
+#!/usr/bin/env node
+
+const fs = require("fs");
+const http = require("http");
+const path = require("path");
+
+const { description, name, version } = require("../package.json");
+
+const existing = (file) => {
+  try {
+    return fs.readFileSync(path.join(process.cwd(), file), "utf8");
+  } catch (e) {
+    return false;
+  }
+}
+
+const load = (file) => {
+  return (
+    existing(file)
+    ||
+    fs.readFileSync(path.join(__dirname, file), "utf8")
+  );
+};
+
+const server = http.createServer((req, res) => {
+  res.writeHead(200, {
+    "Content-Type": "text/html",
+  });
+
+  res.end(`
+    <!doctype html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
+        />
+        <title>
+          Installation – ${name} v${version}
+        </title>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.14.2/codemirror.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.14.2/mode/javascript/javascript.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.14.2/codemirror.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.14.2/theme/monokai.min.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.0.26/css/bulma.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <style>
+          .CodeMirror { height: auto; }
+        </style>
+      </head>
+      <body>
+        <div id="app">
+          <section class="hero is-primary is-bold">
+            <div class="hero-head">
+              <div class="container">
+                <nav class="nav">
+                  <div class="nav-left"></div>
+
+                  <div class="nav-center">
+                    <a class="nav-item" href="https://github.com/ericclemmons/terse-webpack">
+                      <span class="icon">
+                        <i class="fa fa-github"></i>
+                      </span>
+                    </a>
+                    <a class="nav-item" href="https://twitter.com/ericclemmons">
+                      <span class="icon">
+                        <i class="fa fa-twitter"></i>
+                      </span>
+                    </a>
+                  </div>
+
+                  <div class="nav-right"></div>
+                </nav>
+              </div>
+            </div>
+
+            <div class="hero-body">
+              <div class="container">
+                <div class="columns is-vcentered">
+                  <div class="column">
+                    <h1 class="title is-2">
+                      ${name}
+                    </h1>
+                    <h2 class="subtitle">
+                      ${description}
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="container">
+              <p class="subtitle">
+                This simple tool helps you quickly scaffold out a minimal,
+                functioning isomoprhic Webpack application.
+              </p>
+
+              <div class="box">
+                <a class="button is-outlined is-info is-pulled-right">
+                  ${existing("webpack.config.babel.js") ? "Update" : "Create"}
+                </a>
+
+                <h3 class="title is-3">
+                  ${existing("webpack.config.babel.js") ? `
+                    <span class="icon is-medium">
+                      <i class="fa fa-check-circle-o"></i>
+                    </span>
+                  ` : ""}
+
+                  Step 1 – Application Config
+                </h3>
+
+                <h4 class="subtitle">
+                  webpack.config.babel.js
+                </h4>
+
+                <textarea class="textarea" data-mode="application/javascript">${load("webpack.config.babel.js")}</textarea>
+              </div>
+
+              <div class="box">
+                <a class="button is-outlined is-info is-pulled-right">
+                  ${existing("webpack.config.server.babel.js") ? "Update" : "Create"}
+                </a>
+
+                <h3 class="title is-3">
+                  ${existing("webpack.config.babel.js") ? `
+                    <span class="icon is-medium">
+                      <i class="fa fa-check-circle-o"></i>
+                    </span>
+                  ` : ""}
+
+                  Step 2 – Server Config
+                </h3>
+
+                <h4 class="subtitle">
+                  webpack.config.server.babel.js
+                </h4>
+
+                <textarea class="textarea" data-mode="application/javascript">${load("webpack.config.server.babel.js")}</textarea>
+              </div>
+
+              <div class="box">
+                <a class="button is-outlined is-info is-pulled-right">
+                  ${existing("webpack.config.client.babel.js") ? "Update" : "Create"}
+                </a>
+
+                <h3 class="title is-3">
+                  ${existing("webpack.config.babel.js") ? `
+                    <span class="icon is-medium">
+                      <i class="fa fa-check-circle-o"></i>
+                    </span>
+                  ` : ""}
+
+                  Step 3 – Client Config
+                </h3>
+
+                <h4 class="subtitle">
+                  webpack.config.client.babel.js
+                </h4>
+
+                <textarea class="textarea" data-mode="application/javascript">${load("webpack.config.server.babel.js")}</textarea>
+              </div>
+
+              <div class="box">
+                <a class="button is-outlined is-info is-pulled-right">
+                  ${existing("src/server.js") ? "Update" : "Create"}
+                </a>
+
+                <h3 class="title is-3">
+                  ${existing("webpack.config.babel.js") ? `
+                    <span class="icon is-medium">
+                      <i class="fa fa-check-circle-o"></i>
+                    </span>
+                  ` : ""}
+
+                  Step 4 – Server
+                </h3>
+
+                <h4 class="subtitle">
+                  src/server.js
+                </h4>
+
+                <textarea class="textarea" data-mode="application/javascript">${load("src/server.js")}</textarea>
+              </div>
+
+              <div class="box">
+                <a class="button is-outlined is-info is-pulled-right">
+                  ${existing("src/client.js") ? "Update" : "Create"}
+                </a>
+
+                <h3 class="title is-3">
+                  ${existing("webpack.config.babel.js") ? `
+                    <span class="icon is-medium">
+                      <i class="fa fa-check-circle-o"></i>
+                    </span>
+                  ` : ""}
+
+                  Step 5 – Client
+                </h3>
+
+                <h4 class="subtitle">
+                  src/client.js
+                </h4>
+
+                <textarea class="textarea" data-mode="application/javascript">${load("src/client.js")}</textarea>
+              </div>
+
+              <div class="box notification is-success">
+                <h3 class="title is-3">
+                  Last Step!
+                </h3>
+
+                <h4 class="subtitle">
+                  webpack
+                </h4>
+
+                <textarea class="textarea" data-mode="text/shell">$(npm bin)/webpack</textarea>
+              </div>
+            </div>
+          </section>
+
+          <footer class="footer">
+            <div class="container">
+              <div class="content has-text-centered">
+                <p>
+                  <strong>${name}</strong>
+                  <small>v${version}</small>
+                  by
+                  <a href="https://github.com/ericclemmons">Eric Clemmons</a>.
+                </p>
+
+                <p>
+                  &copy; 2016
+                </p>
+              </div>
+            </div>
+          </footer>
+        </div>
+
+        <script>
+          Array.prototype.map.call(
+            document.querySelectorAll("textarea"),
+            function(textarea) {
+              CodeMirror.fromTextArea(
+                textarea,
+                {
+                  lineNumbers: true,
+                  mode: textarea.getAttribute("data-mode"),
+                  theme: "monokai"
+                }
+              );
+            }
+          );
+        </script>
+      </body>
+    </html>
+  `);
+});
+
+server.listen(3000, () => {
+  console.info(`${name} is running: http://localhost:3000/`);
+});
