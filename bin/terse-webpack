@@ -30,8 +30,16 @@ const server = http.createServer((req, res) => {
 
     case "PUT /save":
       return save(req, res);
+
     default:
-      console.error(`Unhandled request: ${method} ${url}`);
+      try {
+        return res.end(fs.readFileSync(path.join(__dirname, req.url), "utf8"));
+      } catch (e) {
+        res.writeHead(404);
+        res.end();
+        console.error(`Unhandled request: ${method} ${url}`);
+        console.error(e);
+      }
   }
 });
 
@@ -49,8 +57,6 @@ const save = (req, res) => {
 };
 
 const view = (req, res) => {
-  const code = fs.readFileSync(path.join(__dirname, "bootstrap.js"), "utf8");
-
   const files = [
     "src/client.js",
     "src/server.js",
@@ -88,42 +94,24 @@ const view = (req, res) => {
         </title>
 
         <!-- @TODO Attempt to use SystemJS & local FS -->
-        <!--
-        <script type="text/javascript" src="https://npmcdn.com/systemjs@0.19.27/dist/system.js"></script>
-        <script>
-          System.config({
-            defaultJSExtensions: true,
-          });
-
-          System.import("./app");
-        </script>
-        -->
-
-        <!-- Babel + React -->
-        <script type="text/javascript" src="https://npmcdn.com/babel-standalone@6.7.7/babel.min.js"></script>
-        <script type="text/javascript" src="https://npmcdn.com/react@15.0.2/dist/react.min.js"></script>
-        <script type="text/javascript" src="https://npmcdn.com/react-dom@15.0.2/dist/react-dom.min.js"></script>
-
-        <!-- MobX -->
-        <script type="text/javascript" src="https://npmcdn.com/mobx@2.1.7/lib/mobx.umd.min.js"></script>
-
-        <!-- CodeMirror -->
-        <script type="text/javascript" src="https://npmcdn.com/codemirror@5.14.2/lib/codemirror.js"></script>
-        <script type="text/javascript" src="https://npmcdn.com/codemirror@5.14.2/mode/javascript/javascript.js"></script>
-        <script type="text/javascript" src="https://npmcdn.com/react-codemirror@0.2.6/dist/react-codemirror.min.js"></script>
-        <link rel="stylesheet" href="https://npmcdn.com/codemirror@5.14.2/lib/codemirror.css">
-        <link rel="stylesheet" href="https://npmcdn.com/codemirror@5.14.2/theme/monokai.css">
+        <script src="https://jspm.io/system@0.19.js"></script>
+        <script src="./config.js"></script>
 
         <!-- Theme -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.0.26/css/bulma.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
         <style>
-          .CodeMirror { height: auto; }
+          .section .CodeMirror { height: auto; }
         </style>
       </head>
       <body>
-        <div id="app"></div>
+        <div id="app">
+          <div style="width: 100%; height: 100%; position: fixed; display: flex; justify-content: center; align-items: center;">
+            <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
 
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify({
@@ -132,22 +120,6 @@ const view = (req, res) => {
             name,
             version,
           })};
-        </script>
-
-        <script type="text/babel">
-          ${code}
-        </script>
-
-        <script>
-          const scripts = document.querySelectorAll('script[type="text/babel"]');
-
-          [...scripts].forEach(({ innerHTML }) => {
-            const { code } = Babel.transform(innerHTML, {
-              presets: ["es2015", "react", "stage-1"],
-            });
-
-            new Function(code)();
-          });
         </script>
       </body>
     </html>
