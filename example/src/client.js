@@ -1,1 +1,1 @@
-alert("Ready to go!");
+alert("Enjoy building your next great app!");
