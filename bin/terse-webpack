@@ -19,6 +19,36 @@ const loadExample = (file) => {
 };
 
 const server = http.createServer((req, res) => {
+  const { body, method, url } = req;
+
+  switch (`${method} ${url}`) {
+    case "GET /":
+      return view(req, res);
+
+    case "GET /favicon.ico":
+      return res.end();
+
+    case "PUT /save":
+      return save(req, res);
+    default:
+      console.error(`Unhandled request: ${method} ${url}`);
+  }
+});
+
+const save = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => body += chunk.toString());
+  req.on("end", () => {
+    const { content, file } = JSON.parse(body);
+
+    fs.writeFileSync(path.join(process.cwd(), file), content);
+    res.writeHead(201);
+    res.end();
+  });
+};
+
+const view = (req, res) => {
   const code = fs.readFileSync(path.join(__dirname, "bootstrap.js"), "utf8");
 
   const files = [
@@ -34,6 +64,7 @@ const server = http.createServer((req, res) => {
       [file]: {
         content: existing || loadExample(file),
         exists: !!existing,
+        saved: false,
       },
     });
   }, {});
@@ -117,22 +148,11 @@ const server = http.createServer((req, res) => {
 
             new Function(code)();
           });
-
-            // function(textarea) {
-            //   CodeMirror.fromTextArea(
-            //     textarea,
-            //     {
-            //       lineNumbers: true,
-            //       mode: textarea.getAttribute("data-mode"),
-            //       theme: "monokai"
-            //     }
-            //   );
-            // }
         </script>
       </body>
     </html>
   `);
-});
+}
 
 server.listen(3000, () => {
   console.info(`${name} is running: http://localhost:3000/`);

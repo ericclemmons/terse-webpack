@@ -18,6 +18,11 @@ const App = () => (
   </div>
 );
 
+const change = (file, content) => {
+  state.files[file].content = content;
+  state.files[file].saved = false;
+};
+
 const Check = () => (
   <span className="icon is-medium">
     <i className="fa fa-check-circle-o"></i>
@@ -41,14 +46,22 @@ const Code = ({
   />
 );
 
-const CreateOrUpdate = ({ file }) => (
-  <a
-    className="button is-outlined is-info is-pulled-right"
-    onClick={() => save(file)}
-  >
-    {state.files[file].exists ? "Update" : "Create"}
-  </a>
-);
+const CreateOrUpdate = ({ file }) => {
+  const { exists, saved } = state.files[file];
+
+  return (
+    <a
+      className={[
+        "button",
+        saved ? "is-success" : "is-info",
+        "is-pulled-right",
+      ].filter(Boolean).join(" ")}
+      onClick={() => save(file)}
+    >
+      {saved ? "Saved!" : exists ? "Update" : "Create"}
+    </a>
+  );
+};
 
 const Footer = () => (
   <footer className="footer">
@@ -87,7 +100,7 @@ const Guide = () => (
         title="Webpack Build Config"
       >
         <Code
-          onChange={(content) => state.files["webpack.config.babel.js"].content = content}
+          onChange={(content) => change("webpack.config.babel.js", content)}
           value={state.files["webpack.config.babel.js"].content}
         />
       </Step>
@@ -101,7 +114,7 @@ const Guide = () => (
         title="Webpack Client Config"
       >
         <Code
-          onChange={(content) => state.files["webpack.config.client.babel.js"].content = content}
+          onChange={(content) => change("webpack.config.client.babel.js", content)}
           value={state.files["webpack.config.client.babel.js"].content}
         />
       </Step>
@@ -115,7 +128,7 @@ const Guide = () => (
         title="Webpack Server Config"
       >
         <Code
-          onChange={(content) => state.files["webpack.config.server.babel.js"].content = content}
+          onChange={(content) => change("webpack.config.server.babel.js", content)}
           value={state.files["webpack.config.server.babel.js"].content}
         />
       </Step>
@@ -129,7 +142,7 @@ const Guide = () => (
         title="Example Server"
       >
         <Code
-          onChange={(content) => state.files["src/server.js"].content = content}
+          onChange={(content) => change("src/server.js", content)}
           value={state.files["src/server.js"].content}
         />
       </Step>
@@ -143,7 +156,7 @@ const Guide = () => (
         title="Example Client"
       >
         <Code
-          onChange={(content) => state.files["src/client.js"].content = content}
+          onChange={(content) => change("src/client.js", content)}
           value={state.files["src/client.js"].content}
         />
       </Step>
@@ -202,7 +215,17 @@ const Header = () => (
 );
 
 const save = (file) => {
-  console.log("Save", file, state.files[file].content);
+  const { content } = state.files[file];
+
+  fetch("/save", {
+    method: "PUT",
+    body: JSON.stringify({
+      file,
+      content
+    })
+  }).then((response) => {
+    state.files[file].saved = true;
+  });
 };
 
 const Step = ({
