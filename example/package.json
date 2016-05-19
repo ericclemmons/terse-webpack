@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "name": "terse-webpack-example",
+  "version": "1.0.0",
+  "scripts": {
+    "link": "(cd .. && npm link .) && npm link @terse/webpack",
+    "postinstall": "npm run link",
+    "start": "webpack"
+  }
+}
