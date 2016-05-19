@@ -93,7 +93,7 @@ const view = (req, res) => {
           Bootstrap – @terse/webpack
         </title>
 
-        <!-- @TODO Attempt to use SystemJS & local FS -->
+        <!-- SystemJS -->
         <script src="https://jspm.io/system@0.19.js"></script>
         <script src="./config.js"></script>
 
