@@ -45,7 +45,6 @@ export class Config {
 
   defaults() {
     this
-      .alias("react", "./node_modules/react")
       .loader("babel", ".js", {
         exclude: /node_modules/,
         query: {
