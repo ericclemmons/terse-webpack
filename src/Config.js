@@ -15,29 +15,6 @@ export class Config {
       loader: {},     // [ext]: [ {...loader} ] ],
       src: {},        // [name]: [files]
     };
-
-    this
-      .alias("react", "./node_modules/react")
-      .loader("babel", ".js", {
-        cacheDirectory: true,
-        exclude: /node_modules/,
-        query: {
-          cacheDirectory: true,
-        },
-      })
-      .loader("json", ".json")
-      .loader("url", [".gif", ".jpg", ".jpeg", ".png"], {
-        query: {
-          limit: 8192,
-        },
-      })
-      .loader("style", ".css")
-      .loader("css", ".css", {
-        query: {
-          localIdentName: "[name]-[local]--[hash:base64:5]",
-        },
-      })
-    ;
   }
 
   alias(pkg, folder) {
@@ -64,6 +41,30 @@ export class Config {
     this.options.debug = debug;
 
     return this;
+  }
+
+  defaults() {
+    this
+      .alias("react", "./node_modules/react")
+      .loader("babel", ".js", {
+        exclude: /node_modules/,
+        query: {
+          cacheDirectory: true,
+        },
+      })
+      .loader("json", ".json")
+      .loader("url", [".gif", ".jpg", ".jpeg", ".png"], {
+        query: {
+          limit: 8192,
+        },
+      })
+      .loader("style", ".css")
+      .loader("css", ".css", {
+        query: {
+          localIdentName: "[name]-[local]--[hash:base64:5]",
+        },
+      })
+    ;
   }
 
   dest(folder) {
