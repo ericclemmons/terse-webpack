@@ -23,6 +23,18 @@ export class Config {
     return this;
   }
 
+  babel(query) {
+    this.loader("babel", [".js", ".jsx"], {
+      exclude: /node_modules/,
+      query: {
+        cacheDirectory: true,
+        ...query,
+      },
+    });
+
+    return this;
+  }
+
   context(context) {
     this.options.context = context;
 
@@ -45,12 +57,7 @@ export class Config {
 
   defaults() {
     this
-      .loader("babel", ".js", {
-        exclude: /node_modules/,
-        query: {
-          cacheDirectory: true,
-        },
-      })
+      .babel()
       .loader("json", ".json")
       .loader("url", [".gif", ".jpg", ".jpeg", ".png"], {
         query: {
