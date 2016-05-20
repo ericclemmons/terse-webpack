@@ -35,11 +35,7 @@
   },
   "homepage": "https://github.com/ericclemmons/terse-js#readme",
   "devDependencies": {
-    "babel-cli": "6.7.5",
-    "babel-register": "6.7.2",
-    "expect": "1.16.0",
     "github-semantic-version": "4.0.13",
-    "mocha": "2.4.5",
     "rimraf": "2.5.2"
   },
   "dependencies": {
