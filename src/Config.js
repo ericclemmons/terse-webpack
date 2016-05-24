@@ -1,5 +1,15 @@
 import path from "path";
 
+const fileExists = (file) => {
+  try {
+    require.resolve(path.join(process.cwd(), file));
+  } catch (e) {
+    return false;
+  }
+
+  return true;
+}
+
 export class Config {
   constructor() {
     const context = process.cwd();
@@ -15,6 +25,10 @@ export class Config {
       loader: {},     // [ext]: [ {...loader} ] ],
       src: {},        // [name]: [files]
     };
+
+    if (debug && fileExists(".eslintrc")) {
+      this.eslint();
+    }
   }
 
   alias(pkg, folder) {
