@@ -58,7 +58,10 @@ export class BrowserConfig extends Config {
     ];
 
     if (debug) {
+      const NpmInstallPlugin = require("npm-install-webpack-plugin");
+
       plugins.push(
+        new NpmInstallPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
       );
