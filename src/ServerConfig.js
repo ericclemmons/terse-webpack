@@ -58,14 +58,16 @@ export class ServerConfig extends Config {
     ];
 
     if (debug) {
+      const NpmInstallPlugin = require("npm-install-webpack-plugin");
       const StartServerPlugin = require("start-server-webpack-plugin").default;
 
       plugins.push(
+        new NpmInstallPlugin(),
+        new StartServerPlugin(),
         new webpack.BannerPlugin(
           'require("source-map-support").install();',
           { raw: true, entryOnly: false },
         ),
-        new StartServerPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
       );
