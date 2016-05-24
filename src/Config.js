@@ -89,6 +89,19 @@ export class Config {
     return this;
   }
 
+  eslint(query) {
+    // @TODO Make this a preLoader
+    this.loader("eslint", [".js", ".jsx"], {
+      exclude: /node_modules/,
+      query: {
+        cacheDirectory: true,
+        ...query,
+      },
+    });
+
+    return this;
+  }
+
   loader(loader, extOrExts = ".js", settings = {}) {
     if (Array.isArray(extOrExts)) {
       extOrExts.forEach((ext) => this.loader(loader, ext, settings));
