@@ -1,5 +1,15 @@
 import path from "path";
 
+const fileExists = (file) => {
+  try {
+    require.resolve(path.join(process.cwd(), file));
+  } catch (e) {
+    return false;
+  }
+
+  return true;
+}
+
 export class Config {
   constructor() {
     const context = process.cwd();
@@ -15,6 +25,14 @@ export class Config {
       loader: {},     // [ext]: [ {...loader} ] ],
       src: {},        // [name]: [files]
     };
+
+    if (fileExists(".babelrc")) {
+      this.babel();
+    }
+
+    if (debug && fileExists(".eslintrc")) {
+      this.eslint();
+    }
   }
 
   alias(pkg, folder) {
@@ -57,7 +75,6 @@ export class Config {
 
   defaults() {
     this
-      .babel()
       .loader("json", ".json")
       .loader("url", [".gif", ".jpg", ".jpeg", ".png"], {
         query: {
@@ -85,6 +102,19 @@ export class Config {
     }
 
     this.options.env = env;
+
+    return this;
+  }
+
+  eslint(query) {
+    // @TODO Make this a preLoader
+    this.loader("eslint", [".js", ".jsx"], {
+      exclude: /node_modules/,
+      query: {
+        cacheDirectory: true,
+        ...query,
+      },
+    });
 
     return this;
   }
