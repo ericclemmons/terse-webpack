@@ -26,6 +26,10 @@ export class Config {
       src: {},        // [name]: [files]
     };
 
+    if (fileExists(".babelrc")) {
+      this.babel();
+    }
+
     if (debug && fileExists(".eslintrc")) {
       this.eslint();
     }
@@ -71,7 +75,6 @@ export class Config {
 
   defaults() {
     this
-      .babel()
       .loader("json", ".json")
       .loader("url", [".gif", ".jpg", ".jpeg", ".png"], {
         query: {
