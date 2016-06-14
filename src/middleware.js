@@ -1,8 +1,9 @@
-import express from "express";
-import hot from "express-hot-middleware";
 import webpack from "webpack";
 
-export function middleware(module, config, callback) {
+export default function middleware(module, config, callback) {
+  const express = require("express");
+  const hot = require("express-hot-middleware");
+
   const compiler = webpack(config);
   const router = express.Router();
 

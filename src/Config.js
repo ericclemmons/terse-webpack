@@ -1,169 +1,122 @@
-import path from "path";
+import { combineReducers, createStore } from "redux";
+import { createAction } from "redux-actions";
 
-const fileExists = (file) => {
-  try {
-    require.resolve(path.join(process.cwd(), file));
-  } catch (e) {
-    return false;
-  }
+import * as defaultReducers from "./reducers";
 
-  return true;
-}
+export default class Config {
+  constructor(userReducers) {
+    const reducers = { ...defaultReducers, ...userReducers };
 
-export class Config {
-  constructor() {
-    const context = process.cwd();
-    const env = process.env.NODE_ENV || "development";
-    const debug = ["development", "test"].indexOf(env) !== -1;
+    this.history = [];
+    this.reducer = combineReducers(reducers);
+    this.store = createStore(this.reducer);
 
-    this.options = {
-      alias: {},      // [package]: folder
-      context,        // Folder
-      env,            // String
-      debug,          // Boolean
-      dest: null,     // Folder
-      loader: {},     // [ext]: [ {...loader} ] ],
-      src: {},        // [name]: [files]
-    };
-
-    if (fileExists(".babelrc")) {
-      this.babel();
+    for (const method in reducers) {
+      this[method] = (...args) => this.call(method, ...args);
     }
 
-    if (debug && fileExists(".eslintrc")) {
-      this.eslint();
-    }
+    // Never bundle @terse/webpack
+    this.externals(function(context, request, callback) {
+      if (
+        context.indexOf(__dirname) === 0
+        ||
+        request === "@terse/webpack"
+      ) {
+        return callback(null, `commonjs2 ${request}`);
+      }
+
+      callback();
+    });
   }
 
-  alias(pkg, folder) {
-    this.options.alias[pkg] = path.resolve(this.options.context, folder);
+  apply(config) {
+    const history = config.getHistory();
 
-    return this;
-  }
+    history.map((action) => {
+      const { type, payload } = action;
+      const { args } = payload;
 
-  babel(query) {
-    this.loader("babel", [".js", ".jsx"], {
-      exclude: /node_modules/,
-      query: {
-        cacheDirectory: true,
-        ...query,
-      },
+      this.call(type, ...args);
     });
 
     return this;
   }
 
-  context(context) {
-    this.options.context = context;
+  call(type, ...args) {
+    const action = createAction(type);
+    const { store } = this;
 
-    return this;
-  }
-
-  create() {
-    throw new Error("`Config.create` should be extended.");
-  }
-
-  debug(debug) {
-    if (typeof debug === "undefined") {
-      return this.options.debug;
-    }
-
-    this.options.debug = debug;
-
-    return this;
-  }
-
-  defaults() {
-    this
-      .loader("json", ".json")
-      .loader("url", [".gif", ".jpg", ".jpeg", ".png"], {
-        query: {
-          limit: 8192,
-        },
-      })
-      .loader("style", ".css")
-      .loader("css", ".css", {
-        query: {
-          localIdentName: "[name]-[local]--[hash:base64:5]",
-        },
-      })
-    ;
-  }
-
-  dest(folder) {
-    this.options.dest = folder;
-
-    return this;
-  }
-
-  env(env) {
-    if (!env) {
-      return this.options.env;
-    }
-
-    this.options.env = env;
-
-    return this;
-  }
-
-  eslint(query) {
-    // @TODO Make this a preLoader
-    this.loader("eslint", [".js", ".jsx"], {
-      exclude: /node_modules/,
-      query: {
-        cacheDirectory: true,
-        ...query,
+    // Store pure version of the action
+    this.history.push({
+      type,
+      payload: {
+        args,
       },
     });
 
-    return this;
-  }
-
-  loader(loader, extOrExts = ".js", settings = {}) {
-    if (Array.isArray(extOrExts)) {
-      extOrExts.forEach((ext) => this.loader(loader, ext, settings));
-
-      return this;
-    }
-
-    const ext = extOrExts;
-
-    if (!loader.match(/-loader$/)) {
-      loader = `${loader}-loader`;
-    }
-
-    if (!this.options.loader[ext]) {
-      this.options.loader[ext] = [];
-    }
-
-    if (typeof loader === "function") {
-      this.options.loader[ext] = loader(this.options.loader[ext]);
-    } else {
-      const test = new RegExp(ext.replace(".", "\\."));
-
-      this.options.loader[ext].push({
-        loader,
-        test,
-        ...settings,
-      });
-    }
+    // Dispatch action with reference to local store for global state
+    this.store.dispatch(action({ args, store }));
 
     return this;
   }
 
-  src(src) {
-    // Convert "./src/client.js" into { client: ["/.../src/client.js"] }
-    if (typeof src === "string") {
-      const parsed = path.parse(src);
-      const basename = path.basename(parsed.base, parsed.ext).toLowerCase();
+  getHistory() {
+    return this.history;
+  }
 
-      // Arrays are best to avoid cyclical dependency issues
-      src = {
-        [basename]: [path.resolve(this.options.context, src)],
-      };
+  getNormalized() {
+    return this.store.getState();
+  }
+
+  toString() {
+    return JSON.stringify(this.getNormalized(), (key, value) => {
+      if (value instanceof RegExp) {
+        return value.toString();
+      }
+
+      return value;
+    }, 2);
+  }
+
+  toWebpack() {
+    const normalized = this.getNormalized();
+    const store = createStore(this.reducer, normalized);
+
+    store.dispatch(createAction("webpack")({ normalized }));
+
+    const config = store.getState();
+
+    // Remove nullified reducers
+    const pruned = Object.keys(config).reduce((pruned, key) => {
+      if (config[key] === null) {
+        return pruned;
+      }
+
+      return {
+        ...pruned,
+        [key]: config[key],
+      }
+    }, {});
+
+    pruned.toString = () => JSON.stringify(pruned, (key, value) => {
+      if (value instanceof RegExp) {
+        return value.toString();
+      }
+
+      return value;
+    }, 2);
+
+    return pruned;
+  }
+
+  when(expected, configure) {
+    const { env } = this.getNormalized();
+
+    const envs = Array.isArray(env) ? env : [env];
+
+    if (envs.indexOf(expected) !== -1) {
+      configure(this);
     }
-
-    this.options.src = src;
 
     return this;
   }

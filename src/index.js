@@ -1,3 +1,4 @@
-export { BrowserConfig } from "./BrowserConfig";
-export { middleware } from "./middleware";
-export { ServerConfig } from "./ServerConfig";
+export ClientConfig from "./ClientConfig";
+export Config from "./Config";
+export ServerConfig from "./ServerConfig";
+export webpackMiddleware from "./middleware";
