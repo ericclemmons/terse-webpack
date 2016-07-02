@@ -5,7 +5,7 @@ export default class ClientConfig extends Config {
     super(...args);
 
     this
-      .entry("src/client.js")
+      .entry({ client: "src/client.js" })
       .output("build/client")
       .plugin("webpack.DefinePlugin", {
         __CLIENT__: true,
@@ -18,8 +18,13 @@ export default class ClientConfig extends Config {
           ),
       })
       .target("web")
+      .when("development", (config) => config
+        .devtool("cheap-module-eval-source-map")
+        .plugin("npm-install-webpack-plugin")
+      )
       .when(["staging", "production"], (config) => config
         .plugin("webpack.optimize.DedupePlugin")
+        .plugin("webpack.NoErrorsPlugin")
         .plugin("webpack.optimize.UglifyJsPlugin", {
           mangle: true,
           sourcemap: false,

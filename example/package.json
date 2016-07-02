@@ -3,8 +3,14 @@
   "name": "terse-webpack-example",
   "version": "1.0.0",
   "scripts": {
-    "link": "(cd .. && npm link .) && npm link @terse/webpack",
-    "postinstall": "npm run link",
-    "start": "webpack"
+    "preinstall": "cd .. && npm run build",
+    "postinstall": "npm install ..",
+    "prestart": "rimraf build",
+    "start": "webpack --config webpack.config.server.js --watch"
+  },
+  "dependencies": {
+    "babel-core": "6.9.1",
+    "babel-preset-es2015-webpack": "6.4.1",
+    "babel-preset-stage-1": "6.5.0"
   }
 }

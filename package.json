@@ -46,12 +46,11 @@
     "rimraf": "^2.5.2"
   },
   "dependencies": {
-    "express-hot-middleware": "1.0.2",
     "lodash": "^4.13.1",
-    "npm-install-webpack-plugin": "^4.0.1",
+    "npm-install-webpack-plugin": "^4.0.4",
     "redux": "^3.5.2",
     "redux-actions": "^0.10.0",
     "start-server-webpack-plugin": "^2.0.1",
-    "webpack": "2.1.0-beta.13"
+    "webpack": "2.1.0-beta.15"
   }
 }

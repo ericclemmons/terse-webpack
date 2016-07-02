@@ -1,11 +1,9 @@
 import express from "express";
-import { middleware as webpack } from "@terse/webpack";
-
-import client from "../webpack.config.client.babel.js";
+import client from "../webpack.config.client.js";
 
 express()
   .use(webpack(client))
-  .use(express.static("dist/client")
+  .use(express.static("build/client"))
   .listen(3000, (err) => {
     if (err) {
       throw err;

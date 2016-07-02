@@ -7,7 +7,7 @@ export default class ServerConfig extends Config {
     super(...args);
 
     this
-      .entry("src/server.js")
+      .entry({ server: "src/server.js" })
       .externals(...fs.readdirSync("./node_modules"))
       .output("build/server")
       .plugin("webpack.DefinePlugin", {
@@ -18,6 +18,7 @@ export default class ServerConfig extends Config {
       })
       .target("node")
       .when("development", (config) => config
+        .devtool("inline-sourcemap")
         .plugin("start-server-webpack-plugin")
         .plugin("webpack.BannerPlugin", {
           banner: `require("source-map-support").install();`,
