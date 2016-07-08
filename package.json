@@ -14,7 +14,6 @@
     "build": "babel src -d dist",
     "prerelease": "npm run build",
     "release": "github-semantic-version",
-    "pretest": "npm run build",
     "test": "mocha",
     "test:watch": "mocha --watch"
   },
@@ -42,14 +41,15 @@
     "babel-preset-es2015": "6.9.0",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-1": "^6.5.0",
+    "expect": "1.20.2",
+    "flow-bin": "0.28.0",
     "github-semantic-version": "^4.0.13",
+    "mocha": "2.5.3",
     "rimraf": "^2.5.2"
   },
   "dependencies": {
     "lodash": "^4.13.1",
     "npm-install-webpack-plugin": "^4.0.4",
-    "redux": "^3.5.2",
-    "redux-actions": "^0.10.0",
     "start-server-webpack-plugin": "^2.0.1",
     "webpack": "2.1.0-beta.15"
   }

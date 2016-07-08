@@ -1,10 +1,5 @@
-import { handleActions } from "redux-actions";
+export default function devtoolReducer(state) {
+  const { devtool } = state;
 
-export default handleActions({
-  devtool: (state, action) => {
-    const { args } = action.payload;
-    const [ sourcemap ] = args;
-
-    return sourcemap;
-  },
-}, null);
+  return devtool;
+}

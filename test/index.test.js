@@ -1,13 +1,11 @@
 import expect from "expect";
-import * as exported from "..";
+import * as exported from "../src";
 
-describe("@terse/webpack", function() {
-  describe("exports", function() {
-    it("should export BrowserConfig, middleware, and ServerConfig", function() {
+describe("@terse/webpack", () => {
+  describe("exports", () => {
+    it("should export api", () => {
       expect(Object.keys(exported)).toEqual([
-        "BrowserConfig",
-        "middleware",
-        "ServerConfig",
+        "api",
       ]);
     });
   });

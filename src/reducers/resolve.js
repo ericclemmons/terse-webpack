@@ -1,13 +1,16 @@
-import { handleActions } from "redux-actions";
+import { reduce } from "lodash";
 
-export default handleActions({
-  webpack: (state, action) => {
-    const { normalized } = action.payload;
-    const { alias, modules } = normalized;
+export default function resolveReducer(state) {
+  const { alias, modules } = state;
 
-    return {
-      alias,
-      modules,
+  return reduce({ alias, modules }, (acc, value, key) => {
+    if (value) {
+      return {
+        ...acc,
+        [key]: value,
+      };
     }
-  },
-}, {})
+
+    return acc;
+  });
+}

@@ -1,37 +1,4 @@
-import { handleActions } from "redux-actions";
+import { Instance } from "../../src";
 
-const traverse = (paths = [], root) => {
-  if (!paths.length) {
-    return root;
-  }
-
-  const [ next, ...rest ] = paths;
-
-  if (root) {
-    return traverse(rest, root[next]);
-  }
-
-  const Module = require(next);
-
-  return traverse(rest, Module.default || Module);
+export default function pluginsReducer(state) {
 }
-
-export default handleActions({
-  webpack: (state, action) => {
-    const { normalized } = action.payload;
-    const { plugin } = normalized;
-
-    return Object.keys(plugin).map((path) => {
-      try {
-        const Plugin = traverse(path.split("."));
-        const args = plugin[path];
-
-        return new Plugin(...args);
-      } catch(e) {
-        console.error("Could not load module " + path);
-
-        throw e;
-      }
-    });
-  },
-}, {})

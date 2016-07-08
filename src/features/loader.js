@@ -1,9 +1,4 @@
-import { handleActions } from "redux-actions";
-
-export const loader = (state, action) => {
-  const { args } = action.payload;
-  const [ loader, ext = ".js", options ] = args;
-
+export default function loaderFeature(state = {}, loader, ext = ".js", options) {
   const exts = Array.isArray(ext) ? ext : [ext];
 
   return exts.reduce((state, ext) => {
@@ -20,9 +15,4 @@ export const loader = (state, action) => {
       ],
     };
   }, state);
-};
-
-export default handleActions({
-  loader,
-  webpack: (state) => null,
-}, {});
+}
