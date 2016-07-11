@@ -14,8 +14,9 @@
     "build": "babel src -d dist",
     "prerelease": "npm run build",
     "release": "github-semantic-version",
-    "test": "mocha",
-    "test:watch": "mocha --watch"
+    "test": "per-env",
+    "test:development": "mocha --watch",
+    "test:test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -45,6 +46,7 @@
     "flow-bin": "0.28.0",
     "github-semantic-version": "^4.0.13",
     "mocha": "2.5.3",
+    "per-env": "1.0.2",
     "rimraf": "^2.5.2"
   },
   "dependencies": {

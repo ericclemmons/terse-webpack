@@ -3,7 +3,14 @@ import { isUndefined, map, reduce } from "lodash";
 import * as defaultFeatures from "./features";
 import * as defaultReducers from "./reducers";
 
-const stringify = (value) => JSON.stringify(value, (key, value) => {
+const stringify = (value) => JSON.stringify(
+  // Sorted object
+  Object.keys(value).sort().reduce((sorted, key) => {
+    sorted[key] = value[key];
+
+    return sorted;
+  }, {})
+, (key, value) => {
   if (value instanceof RegExp) {
     return value.toString();
   }

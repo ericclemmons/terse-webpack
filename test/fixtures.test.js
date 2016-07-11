@@ -2,18 +2,54 @@ import expect from "expect";
 import fs from "fs";
 import path from "path";
 
-describe("@terse/webpack", function() {
-  describe("fixtures", function() {
-    fs.readdirSync(`${__dirname}/fixtures`).map(function(path) {
-      describe(`./${path}`, function() {
-        const api = require(`./fixtures/${path}/actual.js`);
+const fixtures = (type) => {
+  const root = `${__dirname}/fixtures/${type}`;
 
+  return fs.readdirSync(root).map((name) => {
+    const folder = `${root}/${name}`;
+
+    return { folder, name };
+  });
+};
+
+describe("@terse/webpack", () => {
+  describe("features", () => {
+    fixtures("features").map((fixture) => {
+      describe(fixture.name, () => {
+        it("should match expected", () => {
+          expect(
+            require(`${fixture.folder}/actual`)
+          ).toEqual(
+            require(`${fixture.folder}/expected`)
+          );
+        })
+      });
+    });
+  });
+
+  describe("reducers", () => {
+    fixtures("reducers").map((fixture) => {
+      describe(fixture.name, () => {
+        it("should match expected", () => {
+          expect(
+            require(`${fixture.folder}/actual`)
+          ).toEqual(
+            require(`${fixture.folder}/expected`)
+          );
+        })
+      });
+    });
+  });
+
+  describe("examples", () => {
+    fixtures("examples").map((fixture) => {
+      describe(fixture.name, () => {
         describe(".getState()", function() {
           it("should match expected", function() {
             expect(
-              api.getState()
+              require(`${fixture.folder}/actual`).getState()
             ).toEqual(
-              require(`./fixtures/${path}/expected.state.js`)
+              require(`${fixture.folder}/expected.state`)
             );
           });
         });
@@ -22,9 +58,9 @@ describe("@terse/webpack", function() {
           describe(".toString()", function() {
             it("should match expected", function() {
               expect(
-                api.getConfig().toString(),
+                require(`${fixture.folder}/actual`).getConfig().toString(),
               ).toEqual(
-                require(`./fixtures/${path}/expected.string.js`)
+                require(`${fixture.folder}/expected.string`)
               );
             });
           });

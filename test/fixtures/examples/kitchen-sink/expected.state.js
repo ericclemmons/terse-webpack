@@ -59,8 +59,7 @@ module.exports = {
         "process.env.NODE_ENV": "\"development\""
       }
     ],
-    "npm-install-webpack-plugin": [],
-    "webpack.HotModuleReplacementPlugin": []
+    "npm-install-webpack-plugin": []
   },
   "modules": [
     "/Users/Eric/Projects/ericclemmons/terse-webpack/lib",

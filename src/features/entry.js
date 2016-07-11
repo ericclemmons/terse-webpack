@@ -37,5 +37,5 @@ export default function entryFeature(entries, arg) {
     };
   }
 
-  return state;
+  return entries;
 }

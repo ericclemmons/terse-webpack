@@ -1,4 +1,4 @@
-module.exports = require("../../../src").api()
+module.exports = require("../../../../src").api()
   .entry("src/client.js")
   .loader("babel", ".js", {
     exclude: /node_modules/,
@@ -29,7 +29,6 @@ module.exports = require("../../../src").api()
     return api
       .devtool("cheap-module-eval-source-map")
       .plugin("npm-install-webpack-plugin")
-      .plugin("webpack.HotModuleReplacementPlugin")
     ;
   })
   .when(["staging", "production"], function(api) {
