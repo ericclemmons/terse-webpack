@@ -1,5 +1,3 @@
-import preLoader from "./loader";
-
 export alias from "./alias";
 export context from "./context";
 export entry from "./entry";
