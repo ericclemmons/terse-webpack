@@ -47,6 +47,10 @@ module.exports = {
       }
     ]
   },
+  "modules": [
+    "/Users/Eric/Projects/ericclemmons/terse-webpack/lib",
+    "node_modules"
+  ],
   "output": {
     "path": "/Users/Eric/Projects/ericclemmons/terse-webpack/build/client"
   },
@@ -61,10 +65,6 @@ module.exports = {
     ],
     "npm-install-webpack-plugin": []
   },
-  "modules": [
-    "/Users/Eric/Projects/ericclemmons/terse-webpack/lib",
-    "node_modules"
-  ],
+  "sourcemap": "cheap-module-eval-source-map",
   "target": "web",
-  "devtool": "cheap-module-eval-source-map"
 }

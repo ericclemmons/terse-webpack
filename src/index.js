@@ -45,6 +45,19 @@ export const api = (userFeatures, userReducers, history = []) => {
   };
 
   const getState = () => {
+    const initialState = reduce(features, (acc, feature, name) => {
+      const defaultValue = feature();
+
+      if (isUndefined(defaultValue)) {
+        return acc;
+      }
+
+      return {
+        ...acc,
+        [name]: defaultValue,
+      };
+    }, {});
+
     const state = history.reduce((acc, { name, args }) => {
       const featureState = acc[name];
       const feature = features[name];
@@ -53,7 +66,7 @@ export const api = (userFeatures, userReducers, history = []) => {
         ...acc,
         [name]: feature(featureState, ...args),
       };
-    }, {});
+    }, initialState);
 
     Object.defineProperty(state, "toString", {
       value: () => stringify(state),

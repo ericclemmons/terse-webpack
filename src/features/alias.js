@@ -1,17 +1,12 @@
 import path from "path";
-import { handleActions } from "redux-actions";
 
-export default handleActions({
-  alias: (state, action) => {
-    const { args, store } = action.payload;
-    const [ name, folder = `node_modules/${name}` ] = args;
-    const { context } = store.getState();
+export default function alias(existing, from, to) {
+  if (!arguments.length) {
+    return;
+  }
 
-    return {
-      ...state,
-      [name]: path.resolve(context, folder),
-    };
-  },
-
-  webpack: (state) => null,
-}, {})
+  return {
+    ...existing,
+    [from]: to || path.resolve(process.cwd(), "node_modules", from),
+  }
+}

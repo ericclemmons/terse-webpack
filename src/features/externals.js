@@ -1,31 +1,27 @@
 import { isString } from "lodash";
 import path from "path";
-import { handleActions } from "redux-actions";
 
-export default handleActions({
-  externals: (state, action) => {
-    const { args, store } = action.payload;
-    const { context } = store.getState();
+export default function externals(existing, ...args) {
+  if (!arguments.length) {
+    return;
+  }
 
-    const externals = args.map((arg) => {
-      if (!isString(arg)) {
-        return arg;
-      }
-
-      const { dir } = path.parse(arg);
-
-      if (dir) {
-        return path.resolve(context, arg);
-      }
-
+  const externals = args.map((arg) => {
+    if (!isString(arg)) {
       return arg;
-    });
+    }
 
-    return [
-      ...state,
-      ...externals,
-    ];
-  },
+    const { dir } = path.parse(arg);
 
-  webpack: (state) => state.length ? state : null,
-}, [])
+    if (dir) {
+      return path.resolve(process.cwd(), arg);
+    }
+
+    return arg;
+  });
+
+  return [
+    ...existing,
+    ...externals,
+  ];
+}

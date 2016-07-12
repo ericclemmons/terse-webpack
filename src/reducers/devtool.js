@@ -1,5 +1,5 @@
 export default function devtoolReducer(state) {
-  const { devtool } = state;
+  const { sourcemap } = state;
 
-  return devtool;
+  return sourcemap;
 }

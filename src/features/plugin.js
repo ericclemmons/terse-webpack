@@ -1,6 +1,10 @@
-export default function pluginFeature(state, plugin, ...args) {
+export default function pluginFeature(existing, name, ...args) {
+  if (!arguments.length) {
+    return;
+  }
+
   return {
-    ...state,
-    [plugin]: args,
+    ...existing,
+    [name]: args,
   };
 }

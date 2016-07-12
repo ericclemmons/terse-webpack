@@ -1,11 +1,15 @@
-export default function loaderFeature(state = {}, loader, ext = ".js", options) {
+export default function loader(existing = {}, loader, ext = ".js", options) {
+  if (!arguments.length) {
+    return;
+  }
+
   const exts = Array.isArray(ext) ? ext : [ext];
 
-  return exts.reduce((state, ext) => {
-    const loaders = state[ext] || [];
+  return exts.reduce((acc, ext) => {
+    const loaders = acc[ext] || [];
 
     return {
-      ...state,
+      ...acc,
       [ext]: [
         ...loaders,
         {
@@ -14,5 +18,5 @@ export default function loaderFeature(state = {}, loader, ext = ".js", options) 
         },
       ],
     };
-  }, state);
+  }, existing);
 }

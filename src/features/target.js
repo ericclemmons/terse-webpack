@@ -1,3 +1,3 @@
-export default function targetFeature(state, target) {
+export default function targetFeature(existing, target) {
   return target;
 }

@@ -22,20 +22,20 @@ const fromString = (entry, context = process.cwd()) => {
   };
 };
 
-export default function entryFeature(entries, arg) {
+export default function entry(existing, arg) {
   if (isObject(arg)) {
     return {
-      ...entries,
+      ...existing,
       ...fromObject(arg),
     };
   }
 
   if (isString(arg)) {
     return {
-      ...entries,
+      ...existing,
       ...fromString(arg),
     };
   }
 
-  return entries;
+  return existing;
 }

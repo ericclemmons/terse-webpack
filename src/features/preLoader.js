@@ -1,8 +1,3 @@
-import { handleActions } from "redux-actions";
+import loader from "./loader";
 
-import { loader } from "./loader";
-
-export default handleActions({
-  preLoader: loader,
-  webpack: (state) => null,
-}, {});
+export default loader;

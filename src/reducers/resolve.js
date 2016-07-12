@@ -1,6 +1,6 @@
 import { reduce } from "lodash";
 
-export default function resolveReducer(state) {
+export default function resolve(state) {
   const { alias, modules } = state;
 
   return reduce({ alias, modules }, (acc, value, key) => {

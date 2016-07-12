@@ -1,20 +1,20 @@
 import { isPlainObject, isString } from "lodash";
 import path from "path";
 
-export default function outputFeature(state, output) {
+export default function outputFeature(existing, output) {
   if (isPlainObject(output)) {
     return {
-      ...state,
+      ...existing,
       ...output,
     };
   }
 
   if (isString(output)) {
     return {
-      ...state,
+      ...existing,
       path: path.resolve(process.cwd(), output),
     };
   }
 
-  return state;
+  return existing;
 }

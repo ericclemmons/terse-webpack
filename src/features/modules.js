@@ -1,6 +1,10 @@
 import path from "path";
 
-export default function modulesFeature(state = ["node_modules"], ...args) {
+export default function modules(existing = ["node_modules"], ...args) {
+  if (!arguments.length) {
+    return;
+  }
+
   const folders = args.map((folder) => {
     const { dir } = path.parse(folder);
 
@@ -16,6 +20,6 @@ export default function modulesFeature(state = ["node_modules"], ...args) {
   // Prefer newer entries
   return [
     ...folders,
-    ...state,
+    ...existing,
   ];
 }

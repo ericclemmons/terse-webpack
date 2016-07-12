@@ -27,8 +27,8 @@ module.exports = require("../../../../src").api()
   .target("web")
   .when("development", function(api) {
     return api
-      .devtool("cheap-module-eval-source-map")
       .plugin("npm-install-webpack-plugin")
+      .sourcemap("cheap-module-eval-source-map")
     ;
   })
   .when(["staging", "production"], function(api) {

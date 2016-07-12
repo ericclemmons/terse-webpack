@@ -23,15 +23,24 @@ describe("@terse/webpack", function() {
       expect(api()).toIncludeKeys(featureNames);
     });
 
+
+    describe(".getState()", function() {
+      it("should return {}", function() {
+        expect(api().getState()).toEqual({
+          env: defaultFeatures.env(),
+        });
+      });
+    });
+
     describe(".getConfig()", function() {
       it("should return {}", function() {
         expect(api().getConfig()).toEqual({});
       });
-    });
 
-    describe(".getState()", function() {
-      it("should return {}", function() {
-        expect(api().getState()).toEqual({});
+      describe(".toString()", function() {
+        it(`should return "{}"`, function() {
+          expect(api().getConfig().toString()).toEqual("{}");
+        });
       });
     });
 

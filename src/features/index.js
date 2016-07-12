@@ -1,17 +1,14 @@
-// export alias from "./alias";
-// export cache from "./cache";
-// export context from "./context";
-export devtool from "./devtool";
+import preLoader from "./loader";
+
+export alias from "./alias";
 export entry from "./entry";
-// export env from "./env";
-// export externals from "./externals";
+export env from "./env";
+export externals from "./externals";
 export loader from "./loader";
-// export module from "./module";
 export modules from "./modules";
-// export node from "./node";
+export node from "./node";
 export output from "./output";
-// export preLoader from "./preLoader";
+export preLoader from "./preLoader";
 export plugin from "./plugin";
-// export plugins from "./plugins";
-// export resolve from "./resolve";
+export sourcemap from "./sourcemap";
 export target from "./target";
