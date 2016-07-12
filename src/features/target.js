@@ -1,3 +1,3 @@
-export default function targetFeature(existing, target) {
-  return target;
+export default function targetFeature(existing = "web", target) {
+  return target || existing;
 }

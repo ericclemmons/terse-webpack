@@ -1,6 +1,7 @@
 import preLoader from "./loader";
 
 export alias from "./alias";
+export context from "./context";
 export entry from "./entry";
 export env from "./env";
 export externals from "./externals";

@@ -1,10 +1,6 @@
 import path from "path";
 
 export default function modules(existing = ["node_modules"], ...args) {
-  if (!arguments.length) {
-    return;
-  }
-
   const folders = args.map((folder) => {
     const { dir } = path.parse(folder);
 

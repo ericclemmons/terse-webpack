@@ -1,4 +1,5 @@
 import expect, { createSpy } from "expect";
+import { isUndefined, reduce } from "lodash";
 
 import { api } from "../src";
 import * as defaultFeatures from "../src/features";
@@ -25,21 +26,34 @@ describe("@terse/webpack", function() {
 
 
     describe(".getState()", function() {
-      it("should return {}", function() {
-        expect(api().getState()).toEqual({
-          env: defaultFeatures.env(),
-        });
+      const defaultState = {
+        context: process.cwd(),
+        env: process.env.NODE_ENV || "development",
+        modules: ["node_modules"],
+        target: "web",
+      };
+
+      it(`should return ${JSON.stringify(defaultState)}`, function() {
+        expect(api().getState()).toEqual(defaultState);
       });
     });
 
     describe(".getConfig()", function() {
-      it("should return {}", function() {
-        expect(api().getConfig()).toEqual({});
+      const defaultConfig = {
+        cache: true,
+        resolve: {
+          modules: ["node_modules"],
+        },
+        target: "web",
+      };
+
+      it(`should return ${JSON.stringify(defaultConfig)}`, function() {
+        expect(api().getConfig()).toEqual(defaultConfig);
       });
 
       describe(".toString()", function() {
-        it(`should return "{}"`, function() {
-          expect(api().getConfig().toString()).toEqual("{}");
+        it(`should return "${JSON.stringify(defaultConfig)}"`, function() {
+          expect(api().getConfig().toString()).toEqual(JSON.stringify(defaultConfig, null, 2));
         });
       });
     });

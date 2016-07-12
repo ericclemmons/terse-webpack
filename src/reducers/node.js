@@ -1,9 +1,11 @@
 export default function node(state) {
-  const { node } = state;
+  const { node, target } = state;
 
-  return {
-    __filename: true,
-    __dirname: true,
-    ...node,
-  };
+  if (target === "node") {
+    return {
+      __filename: true,
+      __dirname: true,
+      ...node,
+    };
+  }
 }
