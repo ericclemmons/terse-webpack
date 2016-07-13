@@ -41,6 +41,11 @@ describe("@terse/webpack", function() {
     describe(".getConfig()", function() {
       const defaultConfig = {
         cache: true,
+        module: {
+          loaders: [],
+          preLoaders: [],
+        },
+        plugins: [],
         resolve: {
           modules: ["node_modules"],
         },

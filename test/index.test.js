@@ -6,6 +6,8 @@ describe("@terse/webpack", () => {
     it("should export api", () => {
       expect(Object.keys(exported)).toEqual([
         "api",
+        "Expression",
+        "Plugin",
       ]);
     });
   });

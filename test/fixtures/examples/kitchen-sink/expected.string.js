@@ -1,4 +1,5 @@
 module.exports = `{
+  "cache": true,
   "devtool": "cheap-module-eval-source-map",
   "entry": {
     "client": [
@@ -8,8 +9,8 @@ module.exports = `{
   "module": {
     "loaders": [
       {
-        test: /\.js$/,
-        loaders: [
+        "test": /\\.js$/,
+        "loaders": [
           {
             "loader": "babel",
             "exclude": /node_modules/,
@@ -20,15 +21,19 @@ module.exports = `{
         ]
       },
       {
-        test: /\.json$/,
-        loaders: [
-          "json-loader"
+        "test": /\\.json$/,
+        "loaders": [
+          {
+            "loader": "json"
+          }
         ]
       },
       {
-        test: /\.css$/,
-        loaders: [
-          "style-loader",
+        "test": /\\.css$/,
+        "loaders": [
+          {
+            "loader": "style"
+          },
           {
             "loader": "css",
             "query": {
@@ -38,8 +43,8 @@ module.exports = `{
         ]
       },
       {
-        test: /\.jpg$/,
-        loaders: [
+        "test": /\\.jpg$/,
+        "loaders": [
           {
             "loader": "url",
             "query": {
@@ -49,8 +54,8 @@ module.exports = `{
         ]
       },
       {
-        test: /\.png$/,
-        loaders: [
+        "test": /\\.png$/,
+        "loaders": [
           {
             "loader": "url",
             "query": {
@@ -59,7 +64,8 @@ module.exports = `{
           }
         ]
       }
-    ]
+    ],
+    "preLoaders": []
   },
   "output": {
     "chunkFilename": "[id].[hash:5]-[chunkhash:7].js",
@@ -70,18 +76,17 @@ module.exports = `{
     "path": "${process.cwd()}/build/client"
   },
   "plugins": [
-    new terse.plugin("webpack.DefinePlugin", {
+    new Plugin("webpack.DefinePlugin", {
       "__CLIENT__": true,
-      "__ENV__": JSON.stringify(process.env.NODE_ENV || "development"),
+      "__ENV__": ${JSON.stringify(`"${process.env.NODE_ENV || "development"}"`)},
       "__SERVER__": false,
-      "process.env.NODE_ENV": JSON.stringify(
+      "process.env.NODE_ENV": ${JSON.stringify(`"${
         ~[undefined, "development"].indexOf(process.env.NODE_ENV)
         ? "development"
         : "production"
-      ),
+      }"`)}
     }),
-    new terse.plugin("npm-install-webpack-plugin"),
-    new terse.plugin("webpack.HotModuleReplacementPlugin")
+    new Plugin("npm-install-webpack-plugin")
   ],
   "resolve": {
     "modules": [

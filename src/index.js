@@ -1,22 +1,56 @@
-import { isUndefined, map, reduce } from "lodash";
+import Expression from "./Expression";
+import Plugin from "./Plugin";
+
+import { isPlainObject, isUndefined, map, reduce, repeat } from "lodash";
 
 import * as defaultFeatures from "./features";
 import * as defaultReducers from "./reducers";
 
-const stringify = (value) => JSON.stringify(
-  // Sorted object
-  Object.keys(value).sort().reduce((sorted, key) => {
-    sorted[key] = value[key];
+const stringify = (value) => {
+  const replacements = [];
+
+  const replace = (replacement) => {
+    return `__REPLACEMENT_${replacements.push(replacement) - 1}__`;
+  };
+
+  const sort = (object) => Object.keys(object).sort().reduce((sorted, key) => {
+    sorted[key] = object[key];
 
     return sorted;
-  }, {})
-, (key, value) => {
-  if (value instanceof RegExp) {
-    return value.toString();
-  }
+  }, {});
 
-  return value;
-}, 2);
+  const replacer = (key, value) => {
+    if (value instanceof Expression) {
+      return replace(value.toString());
+    }
+
+    if (value instanceof Plugin) {
+      return replace(value.toString(stringify));
+    }
+
+    if (value instanceof RegExp) {
+      return replace(value.toString());
+    }
+
+    return value;
+  };
+
+  const string = JSON.stringify(
+    isPlainObject ? sort(value) : value,
+    replacer,
+    2,
+  );
+
+  return string.replace(
+    /(^[\s]+)?"__REPLACEMENT_([\d+])__"/gm,
+    (match, indent = "", index) => {
+      return `${indent}${replacements[index]}`
+        .split("\n")
+        .join(`\n${indent}`)
+      ;
+    },
+  );
+};
 
 export const api = (userFeatures, userReducers, history = []) => {
   const features = { ...defaultFeatures, ...userFeatures };
@@ -100,3 +134,6 @@ export const api = (userFeatures, userReducers, history = []) => {
     when,
   });
 }
+
+export Expression from "./Expression";
+export Plugin from "./Plugin";

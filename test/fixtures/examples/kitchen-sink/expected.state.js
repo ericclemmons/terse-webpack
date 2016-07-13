@@ -1,9 +1,11 @@
 module.exports = {
+  "context": process.cwd(),
   "entry": {
     "client": [
       "/Users/Eric/Projects/ericclemmons/terse-webpack/src/client.js"
     ]
   },
+  "env": process.env.NODE_ENV || "development",
   "loader": {
     ".js": [
       {
@@ -58,9 +60,13 @@ module.exports = {
     "webpack.DefinePlugin": [
       {
         "__CLIENT__": true,
-        "__ENV__": "\"development\"",
+        "__ENV__": JSON.stringify(process.env.NODE_ENV || "development"),
         "__SERVER__": false,
-        "process.env.NODE_ENV": "\"development\""
+        "process.env.NODE_ENV": JSON.stringify(
+          ~[undefined, "development"].indexOf(process.env.NODE_ENV)
+          ? "development"
+          : "production"
+        ),
       }
     ],
     "npm-install-webpack-plugin": []

@@ -42,15 +42,26 @@ describe("@terse/webpack", () => {
   });
 
   describe("examples", () => {
-    fixtures("examples").map((fixture) => {
+    fixtures("examples").forEach((fixture) => {
       describe(fixture.name, () => {
         describe(".getState()", function() {
-          it("should match expected", function() {
+          const actual = require(`${fixture.folder}/actual`).getState();
+          const expected = require(`${fixture.folder}/expected.state`);
+
+          it("should have the correct keys", () => {
             expect(
-              require(`${fixture.folder}/actual`).getState()
+              Object.keys(actual).sort()
             ).toEqual(
-              require(`${fixture.folder}/expected.state`)
+              Object.keys(expected).sort()
             );
+          });
+
+          Object.keys(actual).sort().forEach((key) => {
+            describe(key, () => {
+              it("should match expected", () => {
+                expect(actual[key]).toEqual(expected[key]);
+              })
+            })
           });
         });
 

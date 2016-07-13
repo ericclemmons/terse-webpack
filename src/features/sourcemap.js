@@ -1,4 +1,4 @@
-export default function sourcemap(existing, sourcemap = true) {
+export default function sourcemap(existing, sourcemap) {
   if (!arguments.length) {
     return;
   }

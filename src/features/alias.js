@@ -1,6 +1,6 @@
 import path from "path";
 
-export default function alias(existing, from, to) {
+export default function alias(existing = {}, from, to) {
   if (!arguments.length) {
     return;
   }
