@@ -1,7 +1,7 @@
 import { isString } from "lodash";
 import path from "path";
 
-export default function externals(existing, ...args) {
+export default function externals(existing = [], ...args) {
   if (!arguments.length) {
     return;
   }

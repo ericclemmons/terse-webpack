@@ -1,6 +1,7 @@
 export cache from "./cache";
 export devtool from "./devtool";
 export entry from "./entry";
+export externals from "./externals";
 export module from "./module";
 export node from "./node";
 export output from "./output";
