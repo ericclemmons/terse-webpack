@@ -8,7 +8,13 @@ const fromObject = (entries, context = process.cwd()) => {
 
     return {
       ...acc,
-      [key]: files.map((file) => path.resolve(context, file)),
+      [key]: files.map((file) => {
+        if (file.charAt(0) === ".") {
+          return path.resolve(context, file);
+        }
+
+        return file;
+      }),
     };
   }, {});
 };
