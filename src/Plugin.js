@@ -1,3 +1,19 @@
+const traverse = (paths = [], root) => {
+  if (!paths.length) {
+    return root;
+  }
+
+  const [ next, ...rest ] = paths;
+
+  if (root) {
+    return traverse(rest, root[next]);
+  }
+
+  const Module = require(next);
+
+  return traverse(rest, Module.default || Module);
+}
+
 export default class Plugin {
   constructor(name, ...args) {
     this.name = name;
@@ -5,15 +21,19 @@ export default class Plugin {
   }
 
   apply(compiler) {
-    // @TODO auto-install?
-    return new window[this.name](...this.args);
+    const Instance = traverse(this.name.split("."));
+    const instance = new Instance(...this.args);
+
+    instance["apply"].call(instance, compiler);
+
+    return instance;
   }
 
   toString(stringify = (value) => JSON.stringify(value, null, 2)) {
     if (!this.args.length) {
-      return `new Plugin("${this.name}")`;
+      return `new terse.Plugin("${this.name}")`;
     }
 
-    return `new Plugin("${this.name}", ${this.args.map(stringify).join(",\n")})`;
+    return `new terse.Plugin("${this.name}", ${this.args.map(stringify).join(",\n")})`;
   }
 }

@@ -76,7 +76,7 @@ module.exports = `{
     "path": "${process.cwd()}/build/client"
   },
   "plugins": [
-    new Plugin("webpack.DefinePlugin", {
+    new terse.Plugin("webpack.DefinePlugin", {
       "__CLIENT__": true,
       "__ENV__": ${JSON.stringify(`"${process.env.NODE_ENV || "development"}"`)},
       "__SERVER__": false,
@@ -86,7 +86,7 @@ module.exports = `{
         : "production"
       }"`)}
     }),
-    new Plugin("npm-install-webpack-plugin")
+    new terse.Plugin("npm-install-webpack-plugin")
   ],
   "resolve": {
     "modules": [
