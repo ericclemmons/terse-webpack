@@ -42,7 +42,7 @@ const stringify = (value) => {
   );
 
   return string.replace(
-    /(^[\s]+)?"__REPLACEMENT_([\d+])__"/gm,
+    /(^[\s]+)?"__REPLACEMENT_([\d]+)__"/gm,
     (match, indent = "", index) => {
       return `${indent}${replacements[index]}`
         .split("\n")
