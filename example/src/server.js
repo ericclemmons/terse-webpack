@@ -1,14 +1,23 @@
 import express from "express";
-import client from "../webpack.config.client.js";
+import app from "./app";
 
-express()
-  .use(webpack(client))
-  .use(express.static("build/client"))
-  .listen(3000, (err) => {
-    if (err) {
-      throw err;
-    }
+if (module.hot) {
+  module.hot.accept("./app", function() {
+    console.log("🔁  HMR Reloading `./app`...");
+  });
 
-    console.info("🌍 Listening at http://localhost:3000/");
-  })
-;
+  console.info("✅  Server-side HMR Enabled!");
+} else {
+  console.info("❌  Server-side HMR Not Supported.");
+}
+
+export default express()
+  .use((req, res) => app.handle(req, res))
+  .listen(3000, function(err) {
+  if (err) {
+    console.error(err);
+    return;
+  }
+
+  console.log("Listening at http://localhost:3000");
+});

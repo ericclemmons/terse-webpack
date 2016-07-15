@@ -8,11 +8,6 @@
     "prestart": "rimraf build",
     "start": "webpack --config webpack.config.server.js --watch"
   },
-  "dependencies": {
-    "babel-core": "6.9.1",
-    "babel-preset-es2015-webpack": "6.4.1",
-    "babel-preset-stage-1": "6.5.0"
-  },
   "devDependencies": {
     "rimraf": "2.5.2"
   }

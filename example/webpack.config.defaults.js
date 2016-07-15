@@ -4,7 +4,6 @@ module.exports = require("@terse/webpack").api()
     query: { cacheDirectory: true },
   })
   .loader("json", ".json")
-  .loader("style", ".css")
   .loader("css", ".css", {
     query: { localIdentName: "[name]-[local]--[hash:base64:5]" },
   })
@@ -12,10 +11,12 @@ module.exports = require("@terse/webpack").api()
     query: { limit: 8192 }, // Inline base64 URLs for <= 8K images
   })
   .modules("./lib")
+  .plugin("webpack.NamedModulesPlugin")
   .when("development", function(config) {
     return config
       .plugin("npm-install-webpack-plugin")
       .plugin("webpack.HotModuleReplacementPlugin")
+      .plugin("webpack.NoErrorsPlugin")
     ;
   })
 ;

@@ -1,4 +1,6 @@
 module.exports = require("./webpack.config.defaults")
-  .client()
+  .entry("./src/client.js")
+  .output("build/client")
+  .target("web")
   .getConfig()
 ;
