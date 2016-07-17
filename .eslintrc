@@ -1,0 +1,4 @@
+{
+  "extends": "@highereducation/eslint-config",
+  "parser": "babel-eslint"
+}
