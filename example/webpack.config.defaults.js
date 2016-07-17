@@ -12,6 +12,7 @@ module.exports = require("@terse/webpack").api()
   })
   .modules("./lib")
   .plugin("webpack.NamedModulesPlugin")
+  .plugin("webpack.ProvidePlugin", { React: "react" })
   .when("development", function(config) {
     return config
       .plugin("npm-install-webpack-plugin")
