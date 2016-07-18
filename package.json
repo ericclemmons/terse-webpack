@@ -17,7 +17,6 @@
     "pretest": "eslint example src test",
     "test": "per-env",
     "test:development": "mocha --watch",
-    "pretest:test": "eslint example src test",
     "test:test": "mocha"
   },
   "repository": {
