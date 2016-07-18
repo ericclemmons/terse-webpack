@@ -1,0 +1,4 @@
+{
+  "plugins": ["react-html-attrs"],
+  "presets": ["es2015-webpack", "react", "stage-1"]
+}

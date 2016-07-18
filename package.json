@@ -1,7 +1,10 @@
 {
   "name": "@terse/webpack",
   "version": "0.0.5",
-  "description": "The best of the React ecosystem in a simple, cohesive API.",
+  "description": "Webpack simplified in a fluent API with presets & an escape hatch so you're not locked in.",
+  "bin": {
+    "terse-webpack": "dist/bin/terse-webpack.js"
+  },
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -9,11 +12,14 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "babel src -d dist",
-    "prepublish": "npm run build",
+    "lint": "eslint example src test",
+    "prerelease": "npm run build",
     "release": "github-semantic-version",
-    "pretest": "npm run build",
-    "test": "mocha",
-    "test:watch": "mocha --watch"
+    "prepretest": "npm run build",
+    "pretest": "npm run lint && npm run build",
+    "test": "per-env",
+    "test:development": "mocha --watch",
+    "test:test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -35,27 +41,26 @@
   },
   "homepage": "https://github.com/ericclemmons/terse-js#readme",
   "devDependencies": {
-    "babel-cli": "6.7.5",
-    "babel-register": "6.7.2",
-    "expect": "1.16.0",
-    "github-semantic-version": "4.0.13",
-    "mocha": "2.4.5",
-    "rimraf": "2.5.2"
+    "@highereducation/eslint-config": "^1.2.0",
+    "babel-cli": "^6.10.1",
+    "babel-eslint": "^6.1.2",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-1": "^6.5.0",
+    "eslint": "^3.1.0",
+    "eslint-plugin-import": "^1.11.0",
+    "eslint-plugin-jsx-a11y": "^2.0.1",
+    "eslint-plugin-react": "^5.2.2",
+    "expect": "^1.20.2",
+    "github-semantic-version": "^4.0.14",
+    "mocha": "^2.5.3",
+    "per-env": "^1.0.2",
+    "rimraf": "^2.5.3"
   },
   "dependencies": {
-    "babel-core": "6.7.6",
-    "babel-loader": "6.2.4",
-    "babel-preset-es2015": "6.6.0",
-    "babel-preset-react": "6.5.0",
-    "babel-preset-stage-1": "6.5.0",
-    "eslint": "2.7.0",
-    "eslint-loader": "1.3.0",
-    "express": "4.13.4",
-    "express-hot-middleware": "1.0.2",
-    "source-map-support": "0.4.0",
-    "start-server-webpack-plugin": "2.0.0",
-    "webpack": "1.12.15",
-    "webpack-dev-middleware": "1.6.1",
-    "webpack-hot-middleware": "2.10.0"
+    "lodash": "^4.13.1",
+    "npm-install-webpack-plugin": "^4.0.4",
+    "start-server-webpack-plugin": "^2.0.1",
+    "webpack": "^2.1.0-beta"
   }
 }

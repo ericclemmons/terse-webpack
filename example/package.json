@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "name": "terse-webpack-example",
+  "version": "1.0.0",
+  "scripts": {
+    "preinstall": "cd .. && npm run build",
+    "postinstall": "npm install ..",
+    "prestart": "rimraf build",
+    "start": "webpack --config webpack.config.server.js --watch"
+  },
+  "devDependencies": {
+    "github-semantic-version": "4.0.14",
+    "rimraf": "2.5.2"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "extends": "@highereducation/eslint-config",
+  "parser": "babel-eslint",
+  "rules": {
+    "array-bracket-spacing": ["error", "never"],
+    "func-names": 0,
+    "no-nested-ternary": 0,
+    "prefer-rest-params": 0,
+    "quote-props": 0,
+    "react/react-in-jsx-scope": 0,
+    "space-before-function-paren": ["error", "never"]
+  }
+}
