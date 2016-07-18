@@ -51,7 +51,6 @@
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^5.2.2",
     "expect": "^1.20.2",
-    "flow-bin": "^0.28.0",
     "github-semantic-version": "^4.0.14",
     "mocha": "^2.5.3",
     "per-env": "^1.0.2",
