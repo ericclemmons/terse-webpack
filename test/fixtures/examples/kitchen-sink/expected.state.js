@@ -2,7 +2,7 @@ module.exports = {
   "context": process.cwd(),
   "entry": {
     "client": [
-      "/Users/Eric/Projects/ericclemmons/terse-webpack/src/client.js",
+      `${process.cwd()}/src/client.js`,
     ],
   },
   "env": process.env.NODE_ENV || "development",
@@ -50,11 +50,11 @@ module.exports = {
     ],
   },
   "modules": [
-    "/Users/Eric/Projects/ericclemmons/terse-webpack/lib",
+    `${process.cwd()}/lib`,
     "node_modules",
   ],
   "output": {
-    "path": "/Users/Eric/Projects/ericclemmons/terse-webpack/build/client",
+    "path": `${process.cwd()}/build/client`,
   },
   "plugin": {
     "webpack.DefinePlugin": [
