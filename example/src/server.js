@@ -14,10 +14,10 @@ if (module.hot) {
 export default express()
   .use((req, res) => app.handle(req, res))
   .listen(3000, function(err) {
-  if (err) {
-    console.error(err);
-    return;
-  }
+    if (err) {
+      console.error(err);
+      return;
+    }
 
-  console.log("Listening at http://localhost:3000");
-});
+    console.log("Listening at http://localhost:3000");
+  });

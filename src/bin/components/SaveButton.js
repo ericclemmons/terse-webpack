@@ -9,8 +9,8 @@ const save = (file) => {
     method: "PUT",
     body: JSON.stringify({
       file,
-      content
-    })
+      content,
+    }),
   }).then((response) => {
     state.files[file].saved = true;
   });
@@ -31,4 +31,4 @@ export default function SaveButton({ file }) {
       {saved ? "Saved!" : exists ? "Update" : "Create"}
     </a>
   );
-};
+}

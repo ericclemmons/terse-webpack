@@ -62,7 +62,7 @@ export default function api(userFeatures, userReducers, history = []) {
   };
 
   const when = (env, configure) => {
-    const envs = Array.isArray(env) ? env : [ env ];
+    const envs = Array.isArray(env) ? env : [env];
     const { NODE_ENV = "development" } = process.env;
 
     if (env === true || envs.indexOf(NODE_ENV) !== -1) {

@@ -1,5 +1,3 @@
-import { reduce } from "lodash";
-
 export default function resolve(state) {
   const { alias, modules } = state;
 

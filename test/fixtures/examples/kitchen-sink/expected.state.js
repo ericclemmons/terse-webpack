@@ -2,8 +2,8 @@ module.exports = {
   "context": process.cwd(),
   "entry": {
     "client": [
-      "/Users/Eric/Projects/ericclemmons/terse-webpack/src/client.js"
-    ]
+      "/Users/Eric/Projects/ericclemmons/terse-webpack/src/client.js",
+    ],
   },
   "env": process.env.NODE_ENV || "development",
   "loader": {
@@ -12,49 +12,49 @@ module.exports = {
         "loader": "babel",
         "exclude": /node_modules/,
         "query": {
-          "cacheDirectory": true
-        }
-      }
+          "cacheDirectory": true,
+        },
+      },
     ],
     ".json": [
       {
-        "loader": "json"
-      }
+        "loader": "json",
+      },
     ],
     ".css": [
       {
-        "loader": "style"
+        "loader": "style",
       },
       {
         "loader": "css",
         "query": {
-          "localIdentName": "[name]-[local]--[hash:base64:5]"
-        }
-      }
+          "localIdentName": "[name]-[local]--[hash:base64:5]",
+        },
+      },
     ],
     ".jpg": [
       {
         "loader": "url",
         "query": {
-          "limit": 8192
-        }
-      }
+          "limit": 8192,
+        },
+      },
     ],
     ".png": [
       {
         "loader": "url",
         "query": {
-          "limit": 8192
-        }
-      }
-    ]
+          "limit": 8192,
+        },
+      },
+    ],
   },
   "modules": [
     "/Users/Eric/Projects/ericclemmons/terse-webpack/lib",
-    "node_modules"
+    "node_modules",
   ],
   "output": {
-    "path": "/Users/Eric/Projects/ericclemmons/terse-webpack/build/client"
+    "path": "/Users/Eric/Projects/ericclemmons/terse-webpack/build/client",
   },
   "plugin": {
     "webpack.DefinePlugin": [
@@ -67,10 +67,10 @@ module.exports = {
           ? "development"
           : "production"
         ),
-      }
+      },
     ],
-    "npm-install-webpack-plugin": []
+    "npm-install-webpack-plugin": [],
   },
   "sourcemap": "cheap-module-eval-source-map",
   "target": "web",
-}
+};

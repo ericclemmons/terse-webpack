@@ -1,3 +1,3 @@
 module.exports = {
-  existing: [ `${process.cwd()}/existing.js` ],
+  existing: [`${process.cwd()}/existing.js`],
 };

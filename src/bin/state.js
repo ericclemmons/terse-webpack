@@ -5,5 +5,5 @@ export default observable({
 
   title() {
     return `${this.name} v${this.version}`;
-  }
+  },
 });

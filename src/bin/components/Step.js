@@ -13,7 +13,7 @@ export default function Step({
 }) {
   return (
     <div className="box">
-      {button ? button : null}
+      {button || null}
 
       <h3 className="title is-3">
         {completed ? <Check /> : null}
@@ -28,4 +28,4 @@ export default function Step({
       {children}
     </div>
   );
-};
+}

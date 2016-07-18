@@ -1,10 +1,10 @@
-import { isObject, isString, reduce } from "lodash";
+import { isObject, isString } from "lodash";
 import path from "path";
 
 const fromObject = (entries, context = process.cwd()) => {
   return Object.keys(entries).reduce((acc, key) => {
     const entry = entries[key];
-    const files = Array.isArray(entry) ? entry : [ entry ];
+    const files = Array.isArray(entry) ? entry : [entry];
 
     return {
       ...acc,
@@ -24,7 +24,7 @@ const fromString = (entry, context = process.cwd()) => {
   const basename = path.basename(parsed.base, parsed.ext).toLowerCase();
 
   return {
-    [basename]: [ path.resolve(context, entry) ],
+    [basename]: [path.resolve(context, entry)],
   };
 };
 

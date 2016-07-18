@@ -21,4 +21,4 @@ export default function moduleReducer(state) {
     loaders: toArray(loader),
     preLoaders: toArray(preLoader),
   };
-};
+}

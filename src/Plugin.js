@@ -3,7 +3,7 @@ const traverse = (paths = [], root) => {
     return root;
   }
 
-  const [ next, ...rest ] = paths;
+  const [next, ...rest] = paths;
 
   if (root) {
     return traverse(rest, root[next]);
@@ -12,7 +12,7 @@ const traverse = (paths = [], root) => {
   const Module = require(next);
 
   return traverse(rest, Module.default || Module);
-}
+};
 
 export default class Plugin {
   constructor(name, ...args) {
@@ -24,7 +24,7 @@ export default class Plugin {
     const Instance = traverse(this.name.split("."));
     const instance = new Instance(...this.args);
 
-    instance["apply"].call(instance, compiler);
+    instance.apply.call(instance, compiler);
 
     return instance;
   }

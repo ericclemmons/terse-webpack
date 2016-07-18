@@ -12,41 +12,19 @@ const loadLocal = (file) => {
   } catch (e) {
     return false;
   }
-}
-
-const loadExample = (file) => {
-  return fs.readFileSync(path.join(__dirname, "..", "example", file), "utf8")
 };
 
-const server = http.createServer((req, res) => {
-  const { body, method, url } = req;
-
-  switch (`${method} ${url}`) {
-    case "GET /":
-      return view(req, res);
-
-    case "GET /favicon.ico":
-      return res.end();
-
-    case "PUT /save":
-      return save(req, res);
-
-    default:
-      try {
-        return res.end(fs.readFileSync(path.join(__dirname, req.url), "utf8"));
-      } catch (e) {
-        res.writeHead(404);
-        res.end();
-        console.error(`Unhandled request: ${method} ${url}`);
-        console.error(e);
-      }
-  }
-});
+const loadExample = (file) => {
+  return fs.readFileSync(path.join(__dirname, "..", "example", file), "utf8");
+};
 
 const save = (req, res) => {
   let body = "";
 
-  req.on("data", (chunk) => body += chunk.toString());
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
   req.on("end", () => {
     const { content, file } = JSON.parse(body);
 
@@ -124,7 +102,33 @@ const view = (req, res) => {
       </body>
     </html>
   `);
-}
+};
+
+
+const server = http.createServer((req, res) => {
+  const { method, url } = req;
+
+  switch (`${method} ${url}`) {
+    case "GET /":
+      return view(req, res);
+
+    case "GET /favicon.ico":
+      return res.end();
+
+    case "PUT /save":
+      return save(req, res);
+
+    default:
+      try {
+        return res.end(fs.readFileSync(path.join(__dirname, req.url), "utf8"));
+      } catch (e) {
+        res.writeHead(404);
+        res.end();
+        console.error(`Unhandled request: ${method} ${url}`);
+        console.error(e);
+      }
+  }
+});
 
 server.listen(3000, () => {
   console.info(`${name} is running: http://localhost:3000/`);

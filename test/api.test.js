@@ -1,5 +1,4 @@
 import expect, { createSpy } from "expect";
-import { isUndefined, reduce } from "lodash";
 
 import { api } from "../src";
 import * as defaultFeatures from "../src/features";

@@ -1,6 +1,5 @@
 import expect from "expect";
 import fs from "fs";
-import path from "path";
 
 const fixtures = (type) => {
   const root = `${__dirname}/fixtures/${type}`;
@@ -14,7 +13,7 @@ const fixtures = (type) => {
 
 describe("@terse/webpack", () => {
   describe("features", () => {
-    fixtures("features").map((fixture) => {
+    fixtures("features").forEach((fixture) => {
       describe(fixture.name, () => {
         it("should match expected", () => {
           expect(
@@ -22,13 +21,13 @@ describe("@terse/webpack", () => {
           ).toEqual(
             require(`${fixture.folder}/expected`)
           );
-        })
+        });
       });
     });
   });
 
   describe("reducers", () => {
-    fixtures("reducers").map((fixture) => {
+    fixtures("reducers").forEach((fixture) => {
       describe(fixture.name, () => {
         it("should match expected", () => {
           expect(
@@ -36,7 +35,7 @@ describe("@terse/webpack", () => {
           ).toEqual(
             require(`${fixture.folder}/expected`)
           );
-        })
+        });
       });
     });
   });
@@ -60,8 +59,8 @@ describe("@terse/webpack", () => {
             describe(key, () => {
               it("should match expected", () => {
                 expect(actual[key]).toEqual(expected[key]);
-              })
-            })
+              });
+            });
           });
         });
 

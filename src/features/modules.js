@@ -11,7 +11,7 @@ export default function modules(existing = ["node_modules"], ...args) {
 
     // e.g. "node_modules"
     return folder;
-  })
+  });
 
   // Prefer newer entries
   return [

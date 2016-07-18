@@ -8,5 +8,5 @@ export default function alias(existing = {}, from, to) {
   return {
     ...existing,
     [from]: to || path.resolve(process.cwd(), "node_modules", from),
-  }
+  };
 }

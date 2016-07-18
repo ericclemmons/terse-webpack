@@ -1,4 +1,4 @@
-var api = require("./webpack.config.defaults")
+module.exports = require("./webpack.config.defaults")
   .entry("./src/server.js")
   .externals(/^@?\w[a-z\-0-9\./]+$/)
   .output("build/server")
@@ -19,6 +19,5 @@ var api = require("./webpack.config.defaults")
       })
     ;
   })
+  .getConfig()
 ;
-
-module.exports = api.getConfig();
