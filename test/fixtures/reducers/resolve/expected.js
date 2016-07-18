@@ -3,7 +3,7 @@ module.exports = {
     react: "react-lite",
   },
   modules: [
-    "/Users/Eric/Projects/ericclemmons/terse-webpack/lib",
+    `${process.cwd()}/lib`,
     "node_modules",
   ],
 };
