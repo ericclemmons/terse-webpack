@@ -9,6 +9,7 @@
     "start": "webpack --config webpack.config.server.js --watch"
   },
   "devDependencies": {
+    "github-semantic-version": "4.0.14",
     "rimraf": "2.5.2"
   }
 }
