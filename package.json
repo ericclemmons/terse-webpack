@@ -12,9 +12,11 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "babel src -d dist",
+    "lint": "eslint example src test",
     "prerelease": "npm run build",
     "release": "github-semantic-version",
-    "pretest": "eslint example src test",
+    "prepretest": "npm run build",
+    "pretest": "npm run lint && npm run build",
     "test": "per-env",
     "test:development": "mocha --watch",
     "test:test": "mocha"
