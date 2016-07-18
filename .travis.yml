@@ -1,5 +1,7 @@
 sudo: false
 language: node_js
+env:
+  - NODE_ENV=test
 cache:
   directories:
     - node_modules

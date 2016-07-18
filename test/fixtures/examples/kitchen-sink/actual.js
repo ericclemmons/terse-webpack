@@ -25,7 +25,7 @@ module.exports = require("../../../../src").api()
   })
   .modules("./lib")
   .target("web")
-  .when("development", function(api) {
+  .when(["development", "test"], function(api) {
     return api
       .plugin("npm-install-webpack-plugin")
       .sourcemap("cheap-module-eval-source-map")
