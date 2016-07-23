@@ -17,7 +17,7 @@
 - Using Webpack on both the _server_ & _client_ is necessary once you
   leverage Webpack's APIs (e.g. `require.context`, `require.ensure`).
 - There are **tons** of configuration pitfalls that can negatively impact
-  impact your build that you shouldn't have to know about.
+  your build that you shouldn't have to know about.
 - It's a full-time job **keeping up-to-date** with the latest build optimizations.
 - **Most React boilerplates have similar configuration**,
   but no abstraction for composition.
