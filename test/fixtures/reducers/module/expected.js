@@ -1,38 +1,26 @@
 module.exports = {
   loaders: [
     {
+      exclude: /node_modules/,
+      loader: "babel",
       test: /\.js$/,
-      loaders: [
-        {
-          exclude: /node_modules/,
-          loader: "babel",
-          query: {
-            cacheDirectory: true,
-          },
-        },
-      ],
+      query: {
+        cacheDirectory: true,
+      },
     },
     {
+      exclude: /node_modules/,
+      loader: "babel",
       test: /\.jsx$/,
-      loaders: [
-        {
-          exclude: /node_modules/,
-          loader: "babel",
-          query: {
-            cacheDirectory: true,
-          },
-        },
-      ],
+      query: {
+        cacheDirectory: true,
+      },
     },
   ],
   preLoaders: [
     {
+      loader: "eslint",
       test: /\.js$/,
-      loaders: [
-        {
-          loader: "eslint",
-        },
-      ],
     },
   ],
 };

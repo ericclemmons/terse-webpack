@@ -10,62 +10,48 @@ module.exports = `{
     "loaders": [
       {
         "test": /\\.js$/,
-        "loaders": [
-          {
-            "loader": "babel",
-            "exclude": /node_modules/,
-            "query": {
-              "cacheDirectory": true
-            }
-          }
-        ]
+        "loader": "babel",
+        "exclude": /node_modules/,
+        "query": {
+          "cacheDirectory": true
+        }
       },
       {
         "test": /\\.json$/,
-        "loaders": [
-          {
-            "loader": "json"
-          }
-        ]
+        "loader": "json"
       },
       {
         "test": /\\.css$/,
-        "loaders": [
-          {
-            "loader": "style"
-          },
-          {
-            "loader": "css",
-            "query": {
-              "localIdentName": "[name]-[local]--[hash:base64:5]"
-            }
-          }
-        ]
+        "loader": "style"
+      },
+      {
+        "test": /\\.css$/,
+        "loader": "css",
+        "query": {
+          "localIdentName": "[name]-[local]--[hash:base64:5]"
+        }
       },
       {
         "test": /\\.jpg$/,
-        "loaders": [
-          {
-            "loader": "url",
-            "query": {
-              "limit": 8192
-            }
-          }
-        ]
+        "loader": "url",
+        "query": {
+          "limit": 8192
+        }
       },
       {
         "test": /\\.png$/,
-        "loaders": [
-          {
-            "loader": "url",
-            "query": {
-              "limit": 8192
-            }
-          }
-        ]
+        "loader": "url",
+        "query": {
+          "limit": 8192
+        }
       }
     ],
-    "preLoaders": []
+    "preLoaders": [
+      {
+        "test": /\\.js$/,
+        "loader": "eslint"
+      }
+    ]
   },
   "output": {
     "chunkFilename": "[id].[hash:5]-[chunkhash:7].js",

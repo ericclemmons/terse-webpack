@@ -8,22 +8,22 @@ export default function Header() {
       <div className="hero-head">
         <div className="container">
           <nav className="nav">
-            <div className="nav-left"></div>
+            <div className="nav-left" />
 
             <div className="nav-center">
               <a className="nav-item" href="https://github.com/ericclemmons/terse-webpack">
                 <span className="icon">
-                  <i className="fa fa-github"></i>
+                  <i className="fa fa-github" />
                 </span>
               </a>
               <a className="nav-item" href="https://twitter.com/ericclemmons">
                 <span className="icon">
-                  <i className="fa fa-twitter"></i>
+                  <i className="fa fa-twitter" />
                 </span>
               </a>
             </div>
 
-            <div className="nav-right"></div>
+            <div className="nav-right" />
           </nav>
         </div>
       </div>

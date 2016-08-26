@@ -6,10 +6,10 @@ const toArray = (exts) => {
 
     return [
       ...acc,
-      {
+      ...loaders.map((loader) => ({
         test,
-        loaders,
-      },
+        ...loader,
+      })),
     ];
   }, []);
 };
