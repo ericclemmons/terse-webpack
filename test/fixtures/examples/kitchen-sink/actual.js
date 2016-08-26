@@ -1,5 +1,6 @@
 module.exports = require("../../../../src").api()
   .entry("src/client.js")
+  .preLoader("eslint")
   .loader("babel", ".js", {
     exclude: /node_modules/,
     query: { cacheDirectory: true },

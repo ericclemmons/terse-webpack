@@ -71,6 +71,13 @@ module.exports = {
     ],
     "npm-install-webpack-plugin": [],
   },
+  "preLoader": {
+    ".js": [
+      {
+        "loader": "eslint",
+      },
+    ],
+  },
   "sourcemap": "cheap-module-eval-source-map",
   "target": "web",
 };
