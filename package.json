@@ -1,6 +1,6 @@
 {
   "name": "@terse/webpack",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Webpack simplified in a fluent API with presets & an escape hatch so you're not locked in.",
   "bin": {
     "terse-webpack": "dist/bin/terse-webpack.js"
