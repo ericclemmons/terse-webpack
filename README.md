@@ -3,7 +3,7 @@
 [![travis build](https://img.shields.io/travis/ericclemmons/terse-webpack.svg)](https://travis-ci.org/ericclemmons/terse-webpack)
 [![version](https://img.shields.io/npm/v/@terse/webpack.svg)](http://npm.im/@terse/webpack)
 [![downloads](https://img.shields.io/npm/dm/@terse/webpack.svg)](http://npm-stat.com/charts.html?package=@terse/webpack)
-[![MIT License](https://img.shields.io/npm/l/@terse/webpack.svg)](http://opensource.org/licenses/MIT)
+[![MIT License](https://img.shields.io/github/license/ericclemmons/terse-webpack.svg)](http://opensource.org/licenses/MIT)
 
 > Webpack simplified in a **fluent API** with **presets** & an escape hatch so **you're not locked in**.
 
