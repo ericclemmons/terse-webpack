@@ -1,5 +1,7 @@
 # @terse/webpack
 
+[![Join the chat at https://gitter.im/ericclemmons/terse-webpack](https://badges.gitter.im/ericclemmons/terse-webpack.svg)](https://gitter.im/ericclemmons/terse-webpack?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![travis build](https://img.shields.io/travis/ericclemmons/terse-webpack.svg)](https://travis-ci.org/ericclemmons/terse-webpack)
 [![version](https://img.shields.io/npm/v/@terse/webpack.svg)](http://npm.im/@terse/webpack)
 [![downloads](https://img.shields.io/npm/dm/@terse/webpack.svg)](http://npm-stat.com/charts.html?package=@terse/webpack)
