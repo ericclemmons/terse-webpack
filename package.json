@@ -3,6 +3,7 @@
   "version": "1.0.6",
   "description": "Webpack simplified in a fluent API with presets & an escape hatch so you're not locked in.",
   "bin": {
+    "webpack": "dist/bin/webpack.js",
     "terse-webpack": "dist/bin/terse-webpack.js"
   },
   "main": "dist/index.js",
